@@ -19,6 +19,7 @@ const HeroPicture = () => {
       ${HeroImg2xWebp} 2100w
       `}
         type="image/webp"
+        className={s.heroPicture}
       />
 
       <img

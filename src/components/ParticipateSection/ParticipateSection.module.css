@@ -5,5 +5,6 @@
 
   @media screen and (min-width: 1920px) {
     max-width: 483px;
+    margin-left: 282px;
   }
 }
