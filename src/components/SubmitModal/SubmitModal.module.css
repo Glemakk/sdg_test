@@ -42,7 +42,7 @@ input {
 .inputWrapper svg {
   position: absolute;
   right: 5px;
-  top: 50%;
+  top: 35%;
   transform: translateY(-50%);
 }
 
@@ -53,6 +53,6 @@ input {
 .errorMessage {
   color: #f22533;
   font-size: 12px;
-  line-height: 18px;
+  line-height: 21px;
   text-align: center;
 }

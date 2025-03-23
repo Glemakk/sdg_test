@@ -17,8 +17,13 @@ const SubmitModal = ({ onClose }: ISubmitModal) => {
   const [openModal, setOpenModal] = useState(false);
   const TITLE =
     "To register, enter the mail to which our news is sent and set your password";
+  const errorEmailMessage = "Please enter a valid e-mail";
 
-  console.log(openModal);
+  const regex =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})$/i;
+  let isValid = email.match(regex);
+  const emailValid = isValid ? true : false;
+  const isEmailInvalid = error && !emailValid;
 
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
@@ -59,18 +64,15 @@ const SubmitModal = ({ onClose }: ISubmitModal) => {
         try {
           const response = await putDating({ email, password });
 
-          if (response.status === 201) {
-            const token = response.headers["x-token"];
-            if (token) {
-              localStorage.setItem("authToken", token);
-            }
-
-            setOpenModal(true);
+          if (response && response.id) {
             onClose();
-          } else {
-            throw new Error("Registration does not succeed");
+            setOpenModal(true);
           }
-        } catch (regError) {
+        } catch (regError: any) {
+          if (regError && regError.response?.status === 400) {
+            return setError("Account with this email already exists.");
+          }
+          console.log("regError", regError.response.status);
           setError("Register error.");
         }
       } else {
@@ -83,48 +85,55 @@ const SubmitModal = ({ onClose }: ISubmitModal) => {
 
   return (
     <>
-      <Modal onClose={onClose} text={""}>
-        <h2>{TITLE}</h2>
+      {!openModal ? (
+        <Modal onClose={onClose} text={""}>
+          <h2>{TITLE}</h2>
 
-        <form onSubmit={handleSubmit}>
-          <div className={s.inputWrapper}>
-            <input
-              className={error ? s.inputError : s.input}
-              type="email"
-              placeholder="Example@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              pattern='/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})$/i'
-            />
-            {error && <ExclamationMarkInRedCircle />}
-            {error && (
-              <p className={s.errorMessage}>Please enter a valid e-mail</p>
-            )}
-          </div>
+          <form onSubmit={handleSubmit}>
+            <div className={s.inputWrapper}>
+              <input
+                className={isEmailInvalid ? s.inputError : s.input}
+                type="text"
+                placeholder="Example@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                pattern='/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})$/i'
+              />
+              {isEmailInvalid && (
+                <>
+                  <ExclamationMarkInRedCircle />
+                  <p className={s.errorMessage}>{errorEmailMessage}</p>
+                </>
+              )}
+            </div>
 
-          <div className={s.inputWrapper}>
-            <input
-              className={error ? s.inputError : s.input}
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={8}
-            />
-            {error && <ExclamationMarkInRedCircle />}
-          </div>
+            <div className={s.inputWrapper}>
+              <input
+                className={error ? s.inputError : s.input}
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength={8}
+              />
+              {error && (
+                <>
+                  <ExclamationMarkInRedCircle />
+                  <p className={s.errorMessage}>{error}</p>
+                </>
+              )}
+            </div>
 
-          {error && <p className={s.errorMessage}>{error}</p>}
-
-          <button className={s.submitBtn} type="submit" disabled={loading}>
-            {loading ? "Sending..." : "SUBMIT"}
-          </button>
-        </form>
-      </Modal>
-
-      {openModal && <ThankYouModal onClose={() => setOpenModal(false)} />}
+            <button className={s.submitBtn} type="submit" disabled={loading}>
+              {loading ? "Sending..." : "SUBMIT"}
+            </button>
+          </form>
+        </Modal>
+      ) : (
+        <ThankYouModal onClose={() => setOpenModal(false)} />
+      )}
     </>
   );
 };

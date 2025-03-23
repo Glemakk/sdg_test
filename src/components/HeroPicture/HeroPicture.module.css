@@ -1,0 +1,15 @@
+.heroPicture {
+  margin: 0 auto;
+  width: 290px;
+  height: 284px;
+
+  @media screen and (min-width: 1280px) {
+    width: 500px;
+    height: 478px;
+  }
+
+  @media screen and (min-width: 1920px) {
+    width: 729px;
+    height: 690px;
+  }
+}
