@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import React, { useEffect } from "react";
 import s from "./Modal.module.css";
 import IconButton from "../IconButton/IconButton";
 import CloseIcon from "../../assets/icons/CloseIcon";
