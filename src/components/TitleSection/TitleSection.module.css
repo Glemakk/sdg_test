@@ -1,0 +1,18 @@
+.title {
+  font-size: 35px;
+  line-height: 110%;
+  font-weight: 800;
+  letter-spacing: calc(-5 * 0.01em);
+  margin-top: 20px;
+  background: #e51726;
+  background: linear-gradient(to bottom, #e51726 0%, #d4208c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  @media screen and (min-width: 1280px) {
+    font-size: 50px;
+  }
+  @media screen and (min-width: 1920px) {
+    font-size: 77px;
+  }
+}

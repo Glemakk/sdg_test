@@ -1,24 +1,42 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { MainContainer } from "./components/MainContainer";
+import { TitleSection } from "./components/TitleSection";
+import heroMobileImg from "./assets/img/HeroImgMobile.jpg";
+import heroMobileImg2x from "./assets/img/HeroImgMobile@2x.jpg";
+import HeroImg from "./assets/img/HeroImgDesctop.jpg";
+import HeroImg2x from "./assets/img/HeroImgDesctop@2x.jpg";
+import s from "./components/MainContainer/MainContainer.module.css";
+import { SignUpSection } from "./components/SignUpSection";
+import { ParticipateSection } from "./components/ParticipateSection";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      window.location.href = `https://www.dating.com/people/#token=${token}`;
+    }
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MainContainer>
+        <img
+          srcSet={`
+            ${heroMobileImg} 320w, 
+            ${heroMobileImg2x} 640w, 
+            ${HeroImg} 960w,
+            ${HeroImg2x} 1281w`}
+          src={heroMobileImg}
+          alt="Hero"
+          className={s.hero}
+          sizes="(min-width: 1920px) 50vw, 100vw"
+        />
+        <ParticipateSection>
+          <TitleSection />
+
+          <SignUpSection />
+        </ParticipateSection>
+      </MainContainer>
     </div>
   );
 }

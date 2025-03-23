@@ -1,0 +1,58 @@
+.submitBtn {
+  width: 166px;
+  height: 45px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: calc(10 * 0.01em);
+  border-radius: 5px;
+
+  @media screen and (min-width: 1920px) {
+    width: 387px;
+    height: 81px;
+    font-size: 23px;
+    letter-spacing: calc(20 * 0.01em);
+    border-radius: 10px;
+  }
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+input {
+  font-family: "Open Sans";
+  font-size: 14px;
+  line-height: 22px;
+  width: 90%;
+  padding: 10px;
+  border: unset;
+  border-bottom: 1px solid #3a3a3a;
+  opacity: 50%;
+  text-align: center;
+
+  @media screen and (min-width: 1920px) {
+    box-sizing: border-box;
+    width: 620px;
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
+.inputWrapper svg {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.inputError {
+  border-bottom: 1px solid #f22533;
+}
+
+.errorMessage {
+  color: #f22533;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+}
