@@ -1,6 +1,7 @@
 import { useState } from "react";
 import s from "./SignUpSection.module.css";
 import { SubmitModal } from "../SubmitModal";
+import { ThankYouModal } from "../ThankYouModal";
 const data = [
   "Subscribe to our News",
   "SIGN UP",
@@ -10,6 +11,7 @@ const data = [
 
 const SignUpSection = () => {
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const signUp = "SIGN UP";
 
   return (
@@ -26,7 +28,13 @@ const SignUpSection = () => {
           </li>
         ))}
       </ul>
-      {isPopUpOpen && <SubmitModal onClose={() => setIsPopUpOpen(false)} />}
+      {isPopUpOpen && (
+        <SubmitModal
+          onClose={() => setIsPopUpOpen(false)}
+          setOpenModal={setOpenModal}
+        />
+      )}
+      {openModal && <ThankYouModal onClose={() => setOpenModal(false)} />}
     </div>
   );
 };
